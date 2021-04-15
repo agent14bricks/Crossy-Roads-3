@@ -24,6 +24,7 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (in_game) {
         move_chicken(character.rule(Predicate.MovingUp), character.rule(Predicate.FacingUp, Predicate.NotMoving))
         last_move_time = game.runtime()
+        music.playTone(370, music.beat(BeatFraction.Eighth))
     }
 })
 function make_random_obstacle () {
@@ -124,6 +125,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`water`, function (sprite, loc
     timer.throttle("check_in_water", 50, function () {
         timer.after(50, function () {
             if (sprite.tileKindAt(TileDirection.Center, assets.tile`water`) && !(is_overlapping_kind(sprite, SpriteKind.Log))) {
+                music.knock.play()
                 sprite.destroy(effects.fountain, 100)
             }
         })
@@ -151,6 +153,7 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     if (in_game) {
         move_chicken(character.rule(Predicate.MovingLeft), character.rule(Predicate.FacingLeft, Predicate.NotMoving))
         last_move_time = game.runtime()
+        music.playTone(370, music.beat(BeatFraction.Eighth))
     }
 })
 function fade_out (delay: number, block: boolean) {
@@ -219,6 +222,7 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     if (in_game) {
         move_chicken(character.rule(Predicate.MovingRight), character.rule(Predicate.FacingRight, Predicate.NotMoving))
         last_move_time = game.runtime()
+        music.playTone(370, music.beat(BeatFraction.Eighth))
     }
 })
 function animate_chicken () {
@@ -309,6 +313,7 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     if (in_game) {
         move_chicken(character.rule(Predicate.MovingDown), character.rule(Predicate.FacingDown, Predicate.NotMoving))
         last_move_time = game.runtime()
+        music.playTone(370, music.beat(BeatFraction.Eighth))
     }
 })
 function make_waterway_lanes () {
@@ -473,6 +478,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
         sprite.destroy()
         otherSprite.setFlag(SpriteFlag.Ghost, true)
     } else {
+        music.thump.play()
         sprite.destroy(effects.spray, 100)
     }
 })
@@ -658,6 +664,7 @@ game.onUpdateInterval(1000, function () {
             in_game = false
             if (!(sprite_eagle)) {
                 timer.after(500, function () {
+                    music.spooky.play()
                     sprite_eagle = sprites.create(assets.image`eagle`, SpriteKind.Enemy)
                     sprite_eagle.setFlag(SpriteFlag.GhostThroughWalls, true)
                     sprite_eagle.x = sprite_player.x
